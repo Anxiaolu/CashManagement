@@ -1,1 +1,8 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/myImages">
+        <file>images/login_backimage.jpg</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>qss/login.qss</file>
+    </qresource>
+</RCC>

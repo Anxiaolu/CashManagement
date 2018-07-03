@@ -25,15 +25,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     mysql_connection_pool/connectionPool.cpp \
-    connection_test/connectiontestthread.cpp
-
+    connection_test/connectiontestthread.cpp \
+    logindialog.cpp
 
 HEADERS  += mainwindow.h \
     connectionPool.h \
     mysql_connection_pool/connectionPool.h \
-    connection_test/connectiontestthread.h
+    connection_test/connectiontestthread.h \
+    logindialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    logindialog.ui
 
 RESOURCES += \
-    myImages.qrc
+    myimages.qrc
+
+OTHER_FILES += \
+    qss/login.qss

@@ -7,7 +7,7 @@ ConnectionPool* ConnectionPool::instance = NULL;
 
 ConnectionPool::ConnectionPool() {
     // 创建数据库连接的这些信息在实际开发的时都需要通过读取配置文件得到，
-    // 这里为了演示方便所以写死在了代码里。
+    // 这里为了方便所以写死在了代码里。
     hostName     = "127.0.0.1";
     databaseName = "qt";
     username     = "root";
