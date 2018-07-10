@@ -1,3 +1,4 @@
+
 #-------------------------------------------------
 #
 # Project created by QtCreator 2018-07-02T17:06:46
@@ -22,23 +23,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    mysql_connection_pool/connectionPool.cpp \
-    connection_test/connectiontestthread.cpp \
-    logindialog.cpp
-
-HEADERS  += mainwindow.h \
-    connectionPool.h \
-    mysql_connection_pool/connectionPool.h \
-    connection_test/connectiontestthread.h \
-    logindialog.h
-
-FORMS    += mainwindow.ui \
-    logindialog.ui
-
-RESOURCES += \
-    myimages.qrc
-
-OTHER_FILES += \
-    qss/login.qss
+# Input
+HEADERS += widget.h \
+           front_seal_dialog.h \
+           connection_test/connectiontestthread.h \
+           mysql_connection_pool/connectionPool.h \
+           login_dialog.h \
+           calculator_dialog.h \
+    vip_manage_dialog.h
+FORMS += widget.ui \
+         front_seal_dialog.ui \
+         login_dialog.ui \
+         calculator_dialog.ui \
+    vip_manage_dialog.ui
+SOURCES += widget.cpp \
+           front_seal_dialog.cpp \
+           main.cpp \
+           connection_test/connectiontestthread.cpp \
+           mysql_connection_pool/connectionPool.cpp \
+           login_dialog.cpp \
+           calculator_dialog.cpp \
+    vip_manage_dialog.cpp
+RESOURCES += myimages.qrc

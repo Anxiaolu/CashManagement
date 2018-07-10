@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../qt-5.8/5.8/gcc_64/include -I../../qt-5.8/5.8/gcc_64/include/QtWidgets -I../../qt-5.8/5.8/gcc_64/include/QtGui -I../../qt-5.8/5.8/gcc_64/include/QtSql -I../../qt-5.8/5.8/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I. -I../../qt-5.8/5.8/gcc_64/mkspecs/linux-g++
+INCPATH       = -I. -I. -I../../qt-5.8/5.8/gcc_64/include -I../../qt-5.8/5.8/gcc_64/include/QtGui -I../../qt-5.8/5.8/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I../../qt-5.8/5.8/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -48,15 +48,33 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp \
+SOURCES       = cashmanagedialog.cpp \
+		front_seal_dialog.cpp \
+		logindialog.cpp \
+		main.cpp \
 		mainwindow.cpp \
-		mysql_connection_pool/connectionPool.cpp \
-		connection_test/connectiontestthread.cpp moc_mainwindow.cpp
-OBJECTS       = main.o \
+		widget.cpp \
+		connection_test/connectiontestthread.cpp \
+		mysql_connection_pool/connectionPool.cpp qrc_myimages.cpp \
+		moc_cashmanagedialog.cpp \
+		moc_front_seal_dialog.cpp \
+		moc_logindialog.cpp \
+		moc_mainwindow.cpp \
+		moc_widget.cpp
+OBJECTS       = cashmanagedialog.o \
+		front_seal_dialog.o \
+		logindialog.o \
+		main.o \
 		mainwindow.o \
-		connectionPool.o \
+		widget.o \
 		connectiontestthread.o \
-		moc_mainwindow.o
+		connectionPool.o \
+		qrc_myimages.o \
+		moc_cashmanagedialog.o \
+		moc_front_seal_dialog.o \
+		moc_logindialog.o \
+		moc_mainwindow.o \
+		moc_widget.o
 DIST          = ../../qt-5.8/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/common/unix.conf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/common/linux.conf \
@@ -218,7 +236,6 @@ DIST          = ../../qt-5.8/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/resources.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/moc.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/unix/opengl.prf \
-		../../qt-5.8/5.8/gcc_64/mkspecs/features/uic.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/unix/thread.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/qmake_use.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/file_copies.prf \
@@ -226,13 +243,20 @@ DIST          = ../../qt-5.8/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/exceptions.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/lex.prf \
-		CashManagement.pro mainwindow.h \
-		connectionPool.h \
-		mysql_connection_pool/connectionPool.h \
-		connection_test/connectiontestthread.h main.cpp \
+		CashManagement.pro cashmanagedialog.h \
+		front_seal_dialog.h \
+		logindialog.h \
+		mainwindow.h \
+		widget.h \
+		connection_test/connectiontestthread.h \
+		mysql_connection_pool/connectionPool.h cashmanagedialog.cpp \
+		front_seal_dialog.cpp \
+		logindialog.cpp \
+		main.cpp \
 		mainwindow.cpp \
-		mysql_connection_pool/connectionPool.cpp \
-		connection_test/connectiontestthread.cpp
+		widget.cpp \
+		connection_test/connectiontestthread.cpp \
+		mysql_connection_pool/connectionPool.cpp
 QMAKE_TARGET  = CashManagement
 DESTDIR       = 
 TARGET        = CashManagement
@@ -241,7 +265,7 @@ TARGET        = CashManagement
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET):  $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: CashManagement.pro ../../qt-5.8/5.8/gcc_64/mkspecs/linux-g++/qmake.conf ../../qt-5.8/5.8/gcc_64/mkspecs/features/spec_pre.prf \
@@ -405,7 +429,6 @@ Makefile: CashManagement.pro ../../qt-5.8/5.8/gcc_64/mkspecs/linux-g++/qmake.con
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/resources.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/moc.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/unix/opengl.prf \
-		../../qt-5.8/5.8/gcc_64/mkspecs/features/uic.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/unix/thread.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/qmake_use.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/file_copies.prf \
@@ -414,9 +437,8 @@ Makefile: CashManagement.pro ../../qt-5.8/5.8/gcc_64/mkspecs/linux-g++/qmake.con
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../qt-5.8/5.8/gcc_64/mkspecs/features/lex.prf \
 		CashManagement.pro \
-		../../qt-5.8/5.8/gcc_64/lib/libQt5Widgets.prl \
+		myimages.qrc \
 		../../qt-5.8/5.8/gcc_64/lib/libQt5Gui.prl \
-		../../qt-5.8/5.8/gcc_64/lib/libQt5Sql.prl \
 		../../qt-5.8/5.8/gcc_64/lib/libQt5Core.prl
 	$(QMAKE) -o Makefile CashManagement.pro
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/spec_pre.prf:
@@ -580,7 +602,6 @@ Makefile: CashManagement.pro ../../qt-5.8/5.8/gcc_64/mkspecs/linux-g++/qmake.con
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/resources.prf:
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/moc.prf:
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/unix/opengl.prf:
-../../qt-5.8/5.8/gcc_64/mkspecs/features/uic.prf:
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/unix/thread.prf:
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/qmake_use.prf:
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/file_copies.prf:
@@ -589,9 +610,8 @@ Makefile: CashManagement.pro ../../qt-5.8/5.8/gcc_64/mkspecs/linux-g++/qmake.con
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/yacc.prf:
 ../../qt-5.8/5.8/gcc_64/mkspecs/features/lex.prf:
 CashManagement.pro:
-../../qt-5.8/5.8/gcc_64/lib/libQt5Widgets.prl:
+myimages.qrc:
 ../../qt-5.8/5.8/gcc_64/lib/libQt5Gui.prl:
-../../qt-5.8/5.8/gcc_64/lib/libQt5Sql.prl:
 ../../qt-5.8/5.8/gcc_64/lib/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile CashManagement.pro
@@ -607,10 +627,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents myimages.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../qt-5.8/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h connectionPool.h mysql_connection_pool/connectionPool.h connection_test/connectiontestthread.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp mysql_connection_pool/connectionPool.cpp connection_test/connectiontestthread.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents cashmanagedialog.h front_seal_dialog.h logindialog.h mainwindow.h widget.h connection_test/connectiontestthread.h mysql_connection_pool/connectionPool.h $(DISTDIR)/
+	$(COPY_FILE) --parents cashmanagedialog.cpp front_seal_dialog.cpp logindialog.cpp main.cpp mainwindow.cpp widget.cpp connection_test/connectiontestthread.cpp mysql_connection_pool/connectionPool.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -634,21 +654,48 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_myimages.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_myimages.cpp
+qrc_myimages.cpp: myimages.qrc \
+		../../qt-5.8/5.8/gcc_64/bin/rcc \
+		qss/login.qss \
+		images/login_backimage.jpg \
+		images/manage_home/purchase.png \
+		images/manage_home/VIP_manage.png \
+		images/manage_home/stock_seal_save.png \
+		images/manage_home/inventory.png \
+		images/manage_home/proseal.png \
+		images/manage_home/stock_adjust.png \
+		images/manage_home/seals_statistics.png \
+		images/front_seal/print.png \
+		images/front_seal/open.png \
+		images/front_seal/add.png \
+		images/front_seal/lock.png \
+		images/front_seal/delete.png \
+		images/front_seal/key.png \
+		images/front_seal/modify.png
+	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/rcc -name myimages myimages.qrc -o qrc_myimages.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: ../../qt-5.8/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h ../../qt-5.8/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_cashmanagedialog.cpp moc_front_seal_dialog.cpp moc_logindialog.cpp moc_mainwindow.cpp moc_widget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../../qt-5.8/5.8/gcc_64/include/QtWidgets/QMainWindow \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+	-$(DEL_FILE) moc_cashmanagedialog.cpp moc_front_seal_dialog.cpp moc_logindialog.cpp moc_mainwindow.cpp moc_widget.cpp
+moc_cashmanagedialog.cpp: cashmanagedialog.h \
+		moc_predefs.h \
+		../../qt-5.8/5.8/gcc_64/bin/moc
+	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/mkspecs/linux-g++ -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtGui -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include cashmanagedialog.h -o moc_cashmanagedialog.cpp
+
+moc_front_seal_dialog.cpp: mysql_connection_pool/connectionPool.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -671,15 +718,299 @@ moc_mainwindow.cpp: ../../qt-5.8/5.8/gcc_64/include/QtWidgets/QMainWindow \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QStandardItemModel \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qwidget.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMap \
+		front_seal_dialog.h \
+		moc_predefs.h \
+		../../qt-5.8/5.8/gcc_64/bin/moc
+	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/mkspecs/linux-g++ -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtGui -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include front_seal_dialog.h -o moc_front_seal_dialog.cpp
+
+moc_logindialog.cpp: mysql_connection_pool/connectionPool.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QKeyEvent \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
+		logindialog.h \
+		moc_predefs.h \
+		../../qt-5.8/5.8/gcc_64/bin/moc
+	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/mkspecs/linux-g++ -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtGui -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include logindialog.h -o moc_logindialog.cpp
+
+moc_mainwindow.cpp: front_seal_dialog.h \
+		mysql_connection_pool/connectionPool.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QStandardItemModel \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMap \
+		mainwindow.h \
+		moc_predefs.h \
+		../../qt-5.8/5.8/gcc_64/bin/moc
+	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/mkspecs/linux-g++ -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtGui -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+
+moc_widget.cpp: ../../qt-5.8/5.8/gcc_64/include/QtCore/QTimer \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasictimer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
@@ -701,83 +1032,32 @@ moc_mainwindow.cpp: ../../qt-5.8/5.8/gcc_64/include/QtWidgets/QMainWindow \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpalette.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontmetrics.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcursor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
-		mainwindow.h \
+		widget.h \
 		moc_predefs.h \
 		../../qt-5.8/5.8/gcc_64/bin/moc
-	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/mkspecs/linux-g++ -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtWidgets -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtGui -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtSql -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/mkspecs/linux-g++ -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/Program/CashManagement -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtGui -I/home/huanlu/QT/qt-5.8/5.8/gcc_64/include/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include widget.h -o moc_widget.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
-compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: mainwindow.ui \
-		../../qt-5.8/5.8/gcc_64/bin/uic
-	/home/huanlu/QT/qt-5.8/5.8/gcc_64/bin/uic mainwindow.ui -o ui_mainwindow.h
-
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
-main.o: main.cpp mysql_connection_pool/connectionPool.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/QtSql \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/QtSqlDepends \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QtCore \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QtCoreDepends \
+cashmanagedialog.o: cashmanagedialog.cpp cashmanagedialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cashmanagedialog.o cashmanagedialog.cpp
+
+front_seal_dialog.o: front_seal_dialog.cpp front_seal_dialog.h \
+		mysql_connection_pool/connectionPool.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -800,41 +1080,43 @@ main.o: main.cpp mysql_connection_pool/connectionPool.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QStandardItemModel \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeventloop.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
@@ -843,563 +1125,462 @@ main.o: main.cpp mysql_connection_pool/connectionPool.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstracttransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydataops.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasictimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbitarray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbuffer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcache.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcollator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreapplication.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcryptographichash.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatetime.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdir.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfileinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdiriterator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeasingcurve.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qendian.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeventtransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qexception.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfileselector.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QObject \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QStringList \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfinalstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuture.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfutureinterface.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrunnable.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qresultstore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhistorystate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qisenum.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonarray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonvalue.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsondocument.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlibrary.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qversionnumber.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlinkedlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlockfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qloggingcategory.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmath.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetaobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimedata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimedatabase.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimetype.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpauseanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qplugin.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpluginloader.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocess.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariantanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qreadwritelock.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qregularexpression.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qresource.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsavefile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsemaphore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsettings.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedmemory.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsignalmapper.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsignaltransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstack.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstandardpaths.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstatemachine.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstorageinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtemporarydir.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QScopedPointer \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextcodec.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthread.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthreadpool.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthreadstorage.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimeline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimezone.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtranslator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/quuid.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qwaitcondition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qxmlstream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcoreversion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qtsqlglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldatabase.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldriver.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldriverplugin.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlerror.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlfield.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlindex.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrecord.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlquerymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrelationaldelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qitemdelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpalette.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontmetrics.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcursor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMap \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QDebug \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QAbstractItemModel \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QModelIndex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QVariant
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o front_seal_dialog.o front_seal_dialog.cpp
+
+logindialog.o: logindialog.cpp logindialog.h \
+		mysql_connection_pool/connectionPool.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QKeyEvent \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qvalidator.h \
+		mainwindow.h \
+		front_seal_dialog.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QStandardItemModel \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
 		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qslider.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qstyle.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabbar.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qrubberband.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qframe.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qlistview.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qcombobox.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrelationaltablemodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqltablemodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlresult.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qtsqlversion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMap \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QFile \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logindialog.o logindialog.cpp
+
+main.o: main.cpp mysql_connection_pool/connectionPool.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
 		connection_test/connectiontestthread.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QThread \
-		mainwindow.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/QMainWindow \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/QApplication \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qapplication.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qguiapplication.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qinputmethod.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/QPushButton \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractbutton.h
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qthread.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		logindialog.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QKeyEvent \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
+		widget.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QTimer \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasictimer.h \
+		front_seal_dialog.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QStandardItemModel \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/QMainWindow \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpalette.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontmetrics.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcursor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
-		ui_mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
-
-connectionPool.o: mysql_connection_pool/connectionPool.cpp mysql_connection_pool/connectionPool.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/QtSql \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/QtSqlDepends \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QtCore \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QtCoreDepends \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeventloop.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstracttransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydataops.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasictimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbitarray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbuffer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcache.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcollator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreapplication.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcryptographichash.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatetime.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdir.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfileinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdiriterator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeasingcurve.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qendian.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeventtransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qexception.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfileselector.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QObject \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QStringList \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfinalstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuture.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfutureinterface.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrunnable.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qresultstore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhistorystate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qisenum.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonarray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonvalue.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsondocument.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlibrary.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qversionnumber.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlinkedlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlockfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qloggingcategory.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmath.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetaobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimedata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimedatabase.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimetype.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpauseanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qplugin.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpluginloader.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocess.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariantanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qreadwritelock.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qregularexpression.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qresource.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsavefile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsemaphore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsettings.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedmemory.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsignalmapper.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsignaltransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstack.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstandardpaths.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstatemachine.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstorageinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtemporarydir.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QScopedPointer \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextcodec.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthread.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthreadpool.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthreadstorage.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimeline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimezone.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtranslator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/quuid.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qwaitcondition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qxmlstream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcoreversion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qtsqlglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldatabase.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldriver.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldriverplugin.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlerror.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlfield.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlindex.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrecord.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlquerymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrelationaldelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qitemdelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpalette.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontmetrics.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcursor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qvalidator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qslider.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qstyle.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabbar.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qrubberband.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qframe.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qlistview.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qcombobox.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrelationaltablemodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqltablemodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlresult.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qtsqlversion.h \
+		front_seal_dialog.h \
+		mysql_connection_pool/connectionPool.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QDebug
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectionPool.o mysql_connection_pool/connectionPool.cpp
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QStandardItemModel \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMap \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QDateTime \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatetime.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QTimer \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasictimer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+
+widget.o: widget.cpp widget.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QTimer \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasictimer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		logindialog.h \
+		mysql_connection_pool/connectionPool.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QKeyEvent \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QDebug \
+		../../qt-5.8/5.8/gcc_64/include/QtGui/QCloseEvent \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QDateTime \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatetime.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QProcess \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocess.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widget.o widget.cpp
 
 connectiontestthread.o: connection_test/connectiontestthread.cpp connection_test/connectiontestthread.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/QThread \
@@ -1452,212 +1633,100 @@ connectiontestthread.o: connection_test/connectiontestthread.cpp connection_test
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		mysql_connection_pool/connectionPool.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/QtSql \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/QtSqlDepends \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QtCore \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QtCoreDepends \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstracteventdispatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeventloop.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectiontestthread.o connection_test/connectiontestthread.cpp
+
+connectionPool.o: mysql_connection_pool/connectionPool.cpp mysql_connection_pool/connectionPool.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qflags.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qchar.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qpair.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstring.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/QDebug \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qdebug.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qhash.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmap.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextstream.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qshareddata.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qvector.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qpoint.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qset.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstractstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qabstracttransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydataops.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbasictimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbitarray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbuffer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qbytearraymatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcache.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcollator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcommandlineoption.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcommandlineparser.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcoreapplication.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qcryptographichash.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatastream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdatetime.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdir.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfileinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfiledevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qdiriterator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeasingcurve.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qendian.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qeventtransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qexception.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfactoryinterface.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfileselector.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QObject \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QStringList \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfinalstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuture.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfutureinterface.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrunnable.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qresultstore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuturesynchronizer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qfuturewatcher.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qhistorystate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qidentityproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qisenum.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonarray.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonvalue.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsondocument.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qjsonobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlibrary.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlibraryinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qversionnumber.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlinkedlist.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qlockfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qloggingcategory.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmargins.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmath.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmessageauthenticationcode.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmetaobject.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimedata.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimedatabase.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qmimetype.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qobjectcleanuphandler.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qparallelanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpauseanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qplugin.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpointer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpluginloader.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qprocess.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qpropertyanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qvariantanimation.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qqueue.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qreadwritelock.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qrect.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsize.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qregularexpression.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qresource.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsavefile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qscopedvaluerollback.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsemaphore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsequentialanimationgroup.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsettings.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedmemory.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsignalmapper.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsignaltransition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsocketnotifier.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsortfilterproxymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstack.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstandardpaths.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstatemachine.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstorageinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qstringlistmodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qsystemsemaphore.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtemporarydir.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QScopedPointer \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtemporaryfile.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextboundaryfinder.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtextcodec.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthreadpool.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qthreadstorage.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimeline.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimer.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtimezone.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtranslator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurl.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qurlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/quuid.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qwaitcondition.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qwineventnotifier.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qxmlstream.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/qtcoreversion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qtsqlglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldatabase.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldriver.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqldriverplugin.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlerror.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlfield.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlindex.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrecord.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlquery.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlquerymodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrelationaldelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qitemdelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtguiglobal.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpaintdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpalette.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcolor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgb.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qrgba64.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qbrush.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qmatrix.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpolygon.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qregion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtransform.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpainterpath.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qimage.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixelformat.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qpixmap.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfont.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontmetrics.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qfontinfo.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qcursor.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qkeysequence.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qevent.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qvector2d.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qtouchdevice.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qvalidator.h \
-		../../qt-5.8/5.8/gcc_64/include/QtGui/qicon.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qslider.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qstyle.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabbar.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qrubberband.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qframe.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qlistview.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../qt-5.8/5.8/gcc_64/include/QtWidgets/qcombobox.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlrelationaltablemodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqltablemodel.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qsqlresult.h \
-		../../qt-5.8/5.8/gcc_64/include/QtSql/qtsqlversion.h \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QQueue \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QString \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutex \
-		../../qt-5.8/5.8/gcc_64/include/QtCore/QMutexLocker
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectiontestthread.o connection_test/connectiontestthread.cpp
+		../../qt-5.8/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectionPool.o mysql_connection_pool/connectionPool.cpp
+
+qrc_myimages.o: qrc_myimages.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_myimages.o qrc_myimages.cpp
+
+moc_cashmanagedialog.o: moc_cashmanagedialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cashmanagedialog.o moc_cashmanagedialog.cpp
+
+moc_front_seal_dialog.o: moc_front_seal_dialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_front_seal_dialog.o moc_front_seal_dialog.cpp
+
+moc_logindialog.o: moc_logindialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_logindialog.o moc_logindialog.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_widget.o: moc_widget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_widget.o moc_widget.cpp
 
 ####### Install
 

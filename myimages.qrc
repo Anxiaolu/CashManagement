@@ -1,6 +1,20 @@
 <RCC>
     <qresource prefix="/myImages">
         <file>images/login_backimage.jpg</file>
+        <file>images/manage_home/inventory.png</file>
+        <file>images/manage_home/proseal.png</file>
+        <file>images/manage_home/purchase.png</file>
+        <file>images/manage_home/seals_statistics.png</file>
+        <file>images/manage_home/stock_adjust.png</file>
+        <file>images/manage_home/stock_seal_save.png</file>
+        <file>images/manage_home/VIP_manage.png</file>
+        <file>images/front_seal/add.png</file>
+        <file>images/front_seal/open.png</file>
+        <file>images/front_seal/print.png</file>
+        <file>images/front_seal/lock.png</file>
+        <file>images/front_seal/key.png</file>
+        <file>images/front_seal/modify.png</file>
+        <file>images/front_seal/delete.png</file>
     </qresource>
     <qresource prefix="/qss">
         <file>qss/login.qss</file>
