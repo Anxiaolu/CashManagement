@@ -58,7 +58,8 @@ void vip_manage_dialog::showVipInfoHeader()
 void vip_manage_dialog::insertVipInfo(QSqlQuery query)
 {
     int curRow = ui->vipInfoTableView->currentIndex().row();
-
+    qDebug() <<"curRow" << curRow;
+    sql_model->selectRow(curRow);
     /*this->sql_model->clear();
     qDebug() << query.value("member_name").toString();
     ui->vipInfoTableView->setModel(stand_model);
