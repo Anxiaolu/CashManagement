@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
     Widget w;
     calculator_dialog cal;
     vip_manage_dialog vip;
-        //if(dlg.exec() == QDialog::Accepted)
+        if(dlg.exec() == QDialog::Accepted)
         {
-            vip.show();
+            w.show();
         }
         return a.exec();
     /*QPushButton *button = new QPushButton("Access Database");

@@ -1,6 +1,5 @@
 #include "login_dialog.h"
 #include "ui_logindialog.h"
-#include "mainwindow.h"
 #include "mysql_connection_pool/connectionPool.h"
 #include <QFile>
 #include <QSqlQuery>
